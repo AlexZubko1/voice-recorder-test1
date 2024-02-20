@@ -10,22 +10,31 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = () => {
     null
   );
   const [audioChunks, setAudioChunks] = useState<Blob[]>([]);
+  let recordingChunks: BlobPart[] = [];
   const [audioUrl, setAudioUrl] = useState<string>('');
 
   const startRecording = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: false,
+      });
       const recorder = new MediaRecorder(stream);
 
       recorder.ondataavailable = (e) => {
-        if (e.data.size > 0) {
-          setAudioChunks((prevChunks) => [...prevChunks, e.data]);
-        }
+        // if (e.data.size > 0) {
+        //   setAudioChunks((prevChunks) => [...prevChunks, e.data]);
+        // }
+        recordingChunks.push(e.data);
+        console.log(recordingChunks);
       };
 
       recorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        //const audioBlob = new Blob(audioChunks, { type: 'audio/mp4' });
+        const audioBlob = new Blob(recordingChunks, { type: 'audio/mp4' });
         const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        audio.play();
         setAudioUrl(audioUrl);
         console.log(audioUrl);
       };
@@ -55,7 +64,12 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = () => {
         🎤
       </div>
       <p>{isRecording ? 'Recording...' : 'Press and hold to talk'}</p>
-      {audioUrl && <p>{audioUrl}</p>}
+      {audioUrl && (
+        <div>
+          <p>{audioUrl}</p>
+          <audio controls src={audioUrl} />
+        </div>
+      )}
     </div>
   );
 };
