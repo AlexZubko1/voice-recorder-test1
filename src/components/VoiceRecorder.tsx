@@ -63,7 +63,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = () => {
       >
         🎤
       </div>
-      <p>{isRecording ? 'Recording...' : 'Press and hold to talk'}</p>
+      <p>{isRecording ? 'Recording...' : 'Press to record'}</p>
       {audioUrl && (
         <div>
           <p>{audioUrl}</p>
