@@ -30,7 +30,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = () => {
       };
 
       recorder.onstop = () => {
-        //const audioBlob = new Blob(audioChunks, { type: 'audio/mp4' });
+        // const audioBlob = new Blob(audioChunks, { type: 'audio/mp4' });
         const audioBlob = new Blob(recordingChunks, { type: 'audio/mp4' });
         const audioUrl = URL.createObjectURL(audioBlob);
         const audio = new Audio(audioUrl);
@@ -55,14 +55,29 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = () => {
   };
 
   return (
-    <div className={`wechat-voice-recorder ${isRecording ? 'recording' : ''}`}>
-      <div
+    <div>
+      <h3 className='text-xl mb-4'>Only for a mic ability tests</h3>
+      {/* <div
         className='icon'
         onMouseDown={startRecording}
         onMouseUp={stopRecording}
       >
         🎤
-      </div>
+      </div> */}
+      <button
+        onClick={startRecording}
+        className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-700 disabled:cursor-not-allowed mr-6'
+        disabled={isRecording}
+      >
+        Record
+      </button>
+      <button
+        onClick={stopRecording}
+        className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-700 disabled:cursor-not-allowed'
+        disabled={!isRecording}
+      >
+        Stop
+      </button>
       <p>{isRecording ? 'Recording...' : 'Press to record'}</p>
       {audioUrl && (
         <div>
