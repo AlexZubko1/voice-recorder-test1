@@ -33,8 +33,8 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = () => {
         // const audioBlob = new Blob(audioChunks, { type: 'audio/mp4' });
         const audioBlob = new Blob(recordingChunks, { type: 'audio/mp4' });
         const audioUrl = URL.createObjectURL(audioBlob);
-        const audio = new Audio(audioUrl);
-        audio.play();
+        // const audio = new Audio(audioUrl);
+        // audio.play();
         setAudioUrl(audioUrl);
         console.log(audioUrl);
       };
